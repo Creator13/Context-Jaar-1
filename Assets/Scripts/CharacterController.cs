@@ -17,6 +17,8 @@ public class CharacterController : MonoBehaviour {
 	[SerializeField] private Camera followerCamera;
 	[SerializeField] private float distanceToScreenEdge = .2f;
 	
+	private Direction moveDir = Direction.None;
+	
 	private SpriteRenderer spRenderer;
 	private Rigidbody2D rb;
 
@@ -48,33 +50,9 @@ public class CharacterController : MonoBehaviour {
 	}
 
 	private void Update() {
-//		float xDistToCamera = Mathf.Abs(transform.position.x - followerCamera.transform.position.x);
-//		float yDistToCamera = Mathf.Abs(transform.position.y - followerCamera.transform.position.y);
-//		
-//		if (xDistToCamera < )
-
-		Vector3 screenPos = followerCamera.WorldToViewportPoint(transform.position);
-
-		// Move camera with player
-//		if (screenPos.y < distanceToScreenEdge || screenPos.y > 1f - distanceToScreenEdge) {
-//			Debug.Log("x runs");
-//			float xDistToCamera = Mathf.Abs(transform.position.x - followerCamera.transform.position.x);
-//
-//			
-//		}
-//		else if (screenPos.x < distanceToScreenEdge || screenPos.x > 1f - distanceToScreenEdge) {
-//			Debug.Log("y runs");
-//			float yDistToCamera = Mathf.Abs(transform.position.y - followerCamera.transform.position.y);
-//
-//			followerCamera.transform.position = transform.position - new Vector3(0, yDistToCamera, -followerCamera.transform.position.z);
-//		}
 		followerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, followerCamera.transform.position.z);
-	}
-
-	private void FixedUpdate() {
-		Direction moveDir = Direction.None;
+		
 		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) {
-
 			if (Input.GetKeyDown(KeyCode.A)) {
 				moveDir = Direction.Left;
 			}
@@ -87,12 +65,15 @@ public class CharacterController : MonoBehaviour {
 			else if (Input.GetKeyDown(KeyCode.S)) {
 				moveDir = Direction.Down;
 			}
+		}
+	}
 
+	private void FixedUpdate() {
+		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) {
 			if (moveDir != Direction.None) {
 				MovePlayer(moveDir);
 			}
 		}
-		
 	}
 
 	private void MovePlayer(Direction dir) {

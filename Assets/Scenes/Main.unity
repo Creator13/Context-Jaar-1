@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 250280997}
   - component: {fileID: 250281001}
   m_Layer: 0
-  m_Name: NPC_Down
+  m_Name: NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,9 +248,10 @@ GameObject:
   - component: {fileID: 533776150}
   - component: {fileID: 533776154}
   - component: {fileID: 533776151}
+  - component: {fileID: 533776155}
   m_Layer: 0
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -268,7 +269,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.5449996, y: 2.172064}
+  m_Offset: {x: 2.890994, y: 2.172064}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -279,7 +280,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.09, y: 4.344128}
+  m_Size: {x: 3.4369516, y: 4.344128}
   m_EdgeRadius: 0
 --- !u!114 &533776151
 MonoBehaviour:
@@ -384,6 +385,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &533776155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533776149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b0650048bad7f743b7782b3c5454e6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1492182300
 GameObject:
   m_ObjectHideFlags: 0
