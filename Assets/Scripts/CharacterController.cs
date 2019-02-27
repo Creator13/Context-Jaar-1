@@ -6,14 +6,17 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour {
 
 	private enum Direction {
-		Up, Down, Left, Right
+		Up, Down, Left, Right, None
 	}
 	
 	[SerializeField] private Sprite spLeft, spRight, spUp, spDown;
 
 	[SerializeField] private Direction startDirection = Direction.Down;
-	[SerializeField] private float walkingSpeed;
+	[SerializeField] private float walkingSpeed = 4;
 
+	[SerializeField] private Camera followerCamera;
+	[SerializeField] private float distanceToScreenEdge = .2f;
+	
 	private SpriteRenderer spRenderer;
 	private Rigidbody2D rb;
 
@@ -44,19 +47,52 @@ public class CharacterController : MonoBehaviour {
 		spRenderer.sprite = startSprite;
 	}
 
+	private void Update() {
+//		float xDistToCamera = Mathf.Abs(transform.position.x - followerCamera.transform.position.x);
+//		float yDistToCamera = Mathf.Abs(transform.position.y - followerCamera.transform.position.y);
+//		
+//		if (xDistToCamera < )
+
+		Vector3 screenPos = followerCamera.WorldToViewportPoint(transform.position);
+
+		// Move camera with player
+//		if (screenPos.y < distanceToScreenEdge || screenPos.y > 1f - distanceToScreenEdge) {
+//			Debug.Log("x runs");
+//			float xDistToCamera = Mathf.Abs(transform.position.x - followerCamera.transform.position.x);
+//
+//			
+//		}
+//		else if (screenPos.x < distanceToScreenEdge || screenPos.x > 1f - distanceToScreenEdge) {
+//			Debug.Log("y runs");
+//			float yDistToCamera = Mathf.Abs(transform.position.y - followerCamera.transform.position.y);
+//
+//			followerCamera.transform.position = transform.position - new Vector3(0, yDistToCamera, -followerCamera.transform.position.z);
+//		}
+		followerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, followerCamera.transform.position.z);
+	}
+
 	private void FixedUpdate() {
-		if (Input.GetKey(KeyCode.A)) {
-			MovePlayer(Direction.Left);
+		Direction moveDir = Direction.None;
+		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) {
+
+			if (Input.GetKeyDown(KeyCode.A)) {
+				moveDir = Direction.Left;
+			}
+			else if (Input.GetKeyDown(KeyCode.D)) {
+				moveDir = Direction.Right;
+			}
+			else if (Input.GetKeyDown(KeyCode.W)) {
+				moveDir = Direction.Up;
+			}
+			else if (Input.GetKeyDown(KeyCode.S)) {
+				moveDir = Direction.Down;
+			}
+
+			if (moveDir != Direction.None) {
+				MovePlayer(moveDir);
+			}
 		}
-		else if (Input.GetKey(KeyCode.D)) {
-			MovePlayer(Direction.Right);
-		}
-		else if (Input.GetKey(KeyCode.W)) {
-			MovePlayer(Direction.Up);
-		}
-		else if (Input.GetKey(KeyCode.S)) {
-			MovePlayer(Direction.Down);
-		}
+		
 	}
 
 	private void MovePlayer(Direction dir) {

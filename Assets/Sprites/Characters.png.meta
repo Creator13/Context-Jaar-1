@@ -6,13 +6,13 @@ TextureImporter:
     21300002: Main_Down
     21300004: Main_Right
     21300006: Main_Up
-    21300008: Characters_4
-    21300010: Characters_5
+    21300008: NPC_Left
+    21300010: NPC_Down
     21300012: Characters_6
-    21300014: Characters_7
+    21300014: NPC_Up
     21300016: Characters_8
     21300018: Characters_9
-    21300020: Characters_10
+    21300020: NPC_Right
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -175,7 +175,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_4
+      name: NPC_Left
       rect:
         serializedVersion: 2
         x: 40
@@ -195,7 +195,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_5
+      name: NPC_Down
       rect:
         serializedVersion: 2
         x: 579
@@ -215,7 +215,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_7
+      name: NPC_Up
       rect:
         serializedVersion: 2
         x: 1701
@@ -275,7 +275,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Characters_10
+      name: NPC_Right
       rect:
         serializedVersion: 2
         x: 1169
