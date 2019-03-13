@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Diagnostics.SymbolStore;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
-public class CharacterController : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour {
 
 	private enum Direction {
 		Up, Down, Left, Right, None
@@ -21,6 +22,8 @@ public class CharacterController : MonoBehaviour {
 	
 	private SpriteRenderer spRenderer;
 	private Rigidbody2D rb;
+
+	private bool moveEnabled = true;
 
 	private void Start() {
 		spRenderer = GetComponent<SpriteRenderer>();
@@ -51,6 +54,8 @@ public class CharacterController : MonoBehaviour {
 
 	private void Update() {
 		followerCamera.transform.position = new Vector3(transform.position.x, transform.position.y, followerCamera.transform.position.z);
+
+		if (!moveEnabled) return;
 		
 		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) {
 			if (Input.GetKeyDown(KeyCode.A)) {
@@ -69,6 +74,7 @@ public class CharacterController : MonoBehaviour {
 	}
 
 	private void FixedUpdate() {
+		if (!moveEnabled) return;
 		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)) {
 			if (moveDir != Direction.None) {
 				MovePlayer(moveDir);
@@ -101,6 +107,10 @@ public class CharacterController : MonoBehaviour {
 		}
 		
 		rb.MovePosition(rb.position += walkingVector * Time.fixedDeltaTime);
+	}
+
+	public void SetMoveEnabled(bool enabled) {
+		moveEnabled = enabled;
 	}
 	
 }

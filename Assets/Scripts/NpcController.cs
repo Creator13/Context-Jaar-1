@@ -10,8 +10,8 @@ public class NpcController : MonoBehaviour {
 	[SerializeField] private Sprite down;
 
 	private GameObject player;
-	private PlayerInteraction pi;
-	private bool inRange;
+	protected PlayerInteraction pi;
+	protected bool inRange;
 	
 	private void Start() {
 		player = GameObject.FindWithTag("Player");
@@ -21,7 +21,10 @@ public class NpcController : MonoBehaviour {
 	private void Update() {
 		float distToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-		if (distToPlayer < 1f) {
+//		Debug.Log(gameObject.name + ": " + distToPlayer);
+		
+		if (distToPlayer < 1.5f) {
+//			Debug.Log("Distance small enough");
 			if (!inRange) {
 				Debug.Log("Hello!");
 				pi.SetInteractor(this);
@@ -29,16 +32,14 @@ public class NpcController : MonoBehaviour {
 			}
 		}
 		else {
-			if (pi) {
-				pi.SetInRange(false);
-			}
+//			Debug.Log("Distance too big");
 
 			inRange = false;
 		}
 		
 	}
 
-	public string GetReply() {
-		return "Hello back!";
+	public virtual string Interact(GameObject go) {
+		return inRange ? "Hello back!" : null;
 	}
 }
