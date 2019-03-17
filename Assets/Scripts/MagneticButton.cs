@@ -6,11 +6,11 @@ public class MagneticButton : MonoBehaviour {
 		Root, Quadratic
 	}
 	
-	[SerializeField] private bool debug;
-	[SerializeField] private CalcMode mode = CalcMode.Quadratic;
-	[Range(0, 1)] [SerializeField] private float power = .5f;
-	[SerializeField] private float range = 250;
-	[SerializeField] private float maxDistance = 100;
+	[SerializeField] private bool debug;							// Debug mode toggle
+	[SerializeField] private CalcMode mode = CalcMode.Quadratic;	// Calculation mode
+	[Range(0, 1)] [SerializeField] private float power = .5f;		// Strength of movement force
+	[SerializeField] private float range = 250;						// Range in which the button operates
+	[SerializeField] private float maxDistance = 100;				// Distance the button moves from the tether point when the cursor is closest to the tether.
 
 	private Vector3 tether;
 	private Vector3 relativeTether;
@@ -18,7 +18,10 @@ public class MagneticButton : MonoBehaviour {
 
 	private void Start() {
 		rt = GetComponent<RectTransform>();
+		
+		// Save absolute tether position
 		tether = rt.position;
+		// Save tether position relative to canvas
 		relativeTether = rt.localPosition;
 	}
 
@@ -33,22 +36,28 @@ public class MagneticButton : MonoBehaviour {
 			return;
 		}
 
-		// Calculate normalized vector 
+		// Calculate direction the button should move in, which is the opposite of the cursor-to-tether direction and
+		// normalize
 		Vector3 movementDir = -(mPos - tether).normalized;
 		if (debug) Debug.DrawRay(tether, movementDir * 1500, Color.green);
 
+		// Normalized distance from mouse to tether, relative to the button's detection range parameter
 		float distanceNormalized = distToTether / range;
 		
 		float moveDistance;
 		if (mode == CalcMode.Root) {
-			moveDistance = (1 - Mathf.Sqrt(distanceNormalized)) * power; // Simple root function
+			// Calculate distance based on simple scaled root function 
+			moveDistance = (1 - Mathf.Sqrt(distanceNormalized)) * power;
 		}
 		else {
+			// Calculate distance based on quadratic formula
 			moveDistance = Mathf.Pow(distanceNormalized - 1, 6) * Mathf.Sqrt(power);
 		}
 
-		rt.localPosition = relativeTether + movementDir * moveDistance * maxDistance;
+		// Apply new position
+		rt.localPosition = Vector3.Lerp(rt.localPosition, relativeTether + movementDir * moveDistance * maxDistance, Time.deltaTime * 30);
 
+		// Draw debug lines
 		if (debug) {
 			Debug.DrawLine(mPos, rt.position, Color.cyan);
 			Debug.DrawLine(mPos, tether, Color.blue);
